@@ -37,27 +37,23 @@ abstract class Feature extends KMLObject implements \JsonSerializable
 
     abstract public function toWKT2d(): string;
 
-    abstract public function jsonSerialize();
-
     abstract public function getAllFeatures();
 
-    public function toExtGeoJSON()
+    public function jsonSerialize()
     {
-        $json_data = [];
+        $jsonData = [];
 
         if (isset($this->id)) {
-            $json_data['id'] = $this->id;
+            $jsonData['id'] = $this->id;
         }
 
-        if (isset($this->name)) {
-            $json_data['properties']['name'] = $this->name;
+        foreach (get_object_vars($this) as $name => $value) {
+            if ($value!=null) {
+                $jsonData['properties'][$name] = $value;
+            }
         }
 
-        if (isset($this->description)) {
-            $json_data['properties']['description'] = $this->description;
-        }
-
-        return $json_data;
+        return $jsonData;
     }
 
     public function addStyleSelector($styleSelector)
@@ -153,7 +149,6 @@ abstract class Feature extends KMLObject implements \JsonSerializable
 
         return implode("\n", $output);
     }
-
 
     public function setName($name)
     {

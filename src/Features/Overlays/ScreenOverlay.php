@@ -66,12 +66,7 @@ class ScreenOverlay extends Overlay
     {
         return null;
     }
-  
-    public function toExtGeoJSON()
-    {
-        return null;
-    }
-  
+
     public function getRotation()
     {
         return $this->rotation;

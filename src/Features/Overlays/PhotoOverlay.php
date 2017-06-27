@@ -44,12 +44,7 @@ class PhotoOverlay extends Overlay
     {
         return [];
     }
-  
-    public function toExtGeoJSON()
-    {
-        return [];
-    }
-  
+
     public function setRotation($rotation)
     {
         $this->rotation = $rotation;

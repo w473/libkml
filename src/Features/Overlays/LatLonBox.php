@@ -79,11 +79,6 @@ class LatLonBox extends KMLObject implements \JsonSerializable
         ];
     }
 
-    public function toExtGeoJSON()
-    {
-        return '';
-    }
-
     public function getNorth()
     {
         return $this->north;

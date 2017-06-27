@@ -10,17 +10,17 @@ abstract class Container extends Feature
   
     public function jsonSerialize()
     {
-        $json_data = null;
+        $jsonData = null;
     
         if (count($this->features)) {
-            $json_data = [];
+            $jsonData = [];
       
             foreach ($this->features as $feature) {
-                $json_data[] = $feature;
+                $jsonData[] = $feature;
             }
         }
     
-        return $json_data;
+        return $jsonData;
     }
   
     public function getAllFeatures()

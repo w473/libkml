@@ -44,26 +44,26 @@ class LinearRing extends Line
 
     public function jsonSerialize()
     {
-        $json_data = null;
+        $jsonData = null;
 
         if (count($this->coordinates)) {
-            $json_data = [
+            $jsonData = [
                 'type'        => 'LineString',
                 'coordinates' => []
             ];
 
             foreach ($this->coordinates as $coordinate) {
-                $json_data['coordinates'][] = $coordinate;
+                $jsonData['coordinates'][] = $coordinate;
             }
 
             $first_coordinate = $this->coordinates[0];
             $last_coordinate = end($this->coordinates);
             if ($first_coordinate != $last_coordinate) {
-                $json_data['coordinates'][] = $first_coordinate;
+                $jsonData['coordinates'][] = $first_coordinate;
             }
         }
 
-        return $json_data;
+        return $jsonData;
     }
 
     public function __toString(): string
