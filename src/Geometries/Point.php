@@ -12,21 +12,21 @@ class Point extends Geometry
     /** @var  AltitudeMode */
     private $altitudeMode;
     /** @var  Coordinates */
-    private $coordinate;
+    private $coordinates;
 
     public function clearCoordinates()
     {
-        $this->coordinate = null;
+        $this->coordinates = null;
     }
 
     public function getCoordinate(): Coordinates
     {
-        return $this->coordinate;
+        return $this->coordinates;
     }
 
-    public function setCoordinate(Coordinates $coordinate)
+    public function setCoordinate(Coordinates $coordinates)
     {
-        $this->coordinate = $coordinate;
+        $this->coordinates = $coordinates;
     }
 
     public function toWKT(): string
@@ -54,16 +54,16 @@ class Point extends Geometry
 
     public function jsonSerialize()
     {
-        $json_data = null;
+        $jsonData = null;
 
         if (isset($this->coordinates)) {
-            $json_data = [
+            $jsonData = [
                 'type'        => 'Point',
                 'coordinates' => $this->coordinates
             ];
         }
 
-        return $json_data;
+        return $jsonData;
     }
 
     public function __toString(): string

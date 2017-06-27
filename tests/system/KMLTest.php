@@ -8,7 +8,7 @@ use PHPUnit\Framework\TestCase;
 class KMLTest extends TestCase
 {
     const SAMPLE_TIME_KML = __DIR__ . '/../data/sample-time.kml';
-    const PARSE_TEST_KML = __DIR__ . '/../data/parse-test.kml';
+    const PARSE_TEST_KML  = __DIR__ . '/../data/parse-test.kml';
 
     public function testCreateFromTextJson()
     {
@@ -18,7 +18,9 @@ class KMLTest extends TestCase
 
         $this->assertInstanceOf(KML::class, $kml);
         $this->assertEquals(
-            '{"type":"FeatureCollection","features":[{"type":"Feature","geometry":null}]}',
+            '{"type":"FeatureCollection","features":[{"id":"mountainpin1","properties":' .
+            '{"name":"Pin on a mountaintop","styleUrl":"#pushpin","id":"mountainpin1"},"type":' .
+            '"Feature","geometry":{"type":"Point","coordinates":[170.1435558771009,-43.60505741890396]}}]}',
             json_encode($kml)
         );
     }

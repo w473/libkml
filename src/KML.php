@@ -89,38 +89,20 @@ class KML implements \JsonSerializable
         $jsonData = [];
 
         if (isset($this->feature)) {
-            $allFeatures = $this->getAllFeatures();
+            $all_features = $this->getAllFeatures();
 
             $jsonData['type'] = 'FeatureCollection';
             $jsonData['features'] = [];
 
-            foreach ($allFeatures as $feature) {
-                $jsonData['features'][] = $feature;
-            }
-        }
-
-        return $jsonData;
-    }
-
-    public function toExtGeoJSON(): string
-    {
-        $json_data = [];
-
-        if (isset($this->feature)) {
-            $all_features = $this->getAllFeatures();
-
-            $json_data['type'] = 'FeatureCollection';
-            $json_data['features'] = [];
-
             foreach ($all_features as $feature) {
-                $json_feature = $feature->toExtGeoJSON();
+                $json_feature = $feature->jsonSerialize();
                 if ($json_feature) {
-                    $json_data['features'][] = $json_feature;
+                    $jsonData['features'][] = $json_feature;
                 }
             }
         }
 
-        return json_encode($json_data);
+        return $jsonData;
     }
 
     /**

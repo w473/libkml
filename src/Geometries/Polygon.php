@@ -11,40 +11,40 @@ class Polygon extends GeometrySimple
 
     public function jsonSerialize()
     {
-        $json_data = null;
+        $jsonData = null;
 
         if (isset($this->outerBoundaryIs)) {
-            $json_data = [
+            $jsonData = [
                 'type'        => 'Polygon',
                 'coordinates' => []
             ];
 
             $outerCoordinates = $this->outerBoundaryIs->getCoordinates();
             foreach ($outerCoordinates as $coordinate) {
-                $json_data['coordinates'][0][] = $coordinate;
+                $jsonData['coordinates'][0][] = $coordinate;
             }
 
             $first_coordinate = $outerCoordinates[0];
             $last_coordinate = end($outerCoordinates);
             if ($first_coordinate != $last_coordinate) {
-                $json_data['coordinates'][0][] = $first_coordinate;
+                $jsonData['coordinates'][0][] = $first_coordinate;
             }
 
             if (isset($this->innerBoundaryIs)) {
                 $innerCoordinates = $this->innerBoundaryIs;
                 foreach ($innerCoordinates as $coordinate) {
-                    $json_data['coordinates'][1][] = $coordinate;
+                    $jsonData['coordinates'][1][] = $coordinate;
                 }
 
                 $first_coordinate = $innerCoordinates[0];
                 $last_coordinate = end($innerCoordinates);
                 if ($first_coordinate != $last_coordinate) {
-                    $json_data['coordinates'][1][] = $first_coordinate;
+                    $jsonData['coordinates'][1][] = $first_coordinate;
                 }
             }
         }
 
-        return $json_data;
+        return $jsonData;
     }
 
     public function toWKT(): string

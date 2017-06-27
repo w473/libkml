@@ -55,30 +55,16 @@ class Placemark extends Feature
 
     public function jsonSerialize()
     {
-        $json_data = [];
+        $jsonData = parent::jsonSerialize();
 
         if (isset($this->geometry)) {
-            $json_data = [
-                'type'     => 'Feature',
-                'geometry' => $this->geometry
-            ];
-        }
-
-        return $json_data;
-    }
-
-    public function toExtGeoJSON()
-    {
-        $json_data = parent::toExtGeoJSON();
-
-        if (isset($this->geometry)) {
-            $json_data = array_merge($json_data, [
+            $jsonData = array_merge($jsonData, [
                 'type'     => 'Feature',
                 'geometry' => $this->geometry
             ]);
         }
 
-        return $json_data;
+        return $jsonData;
     }
 
     public function setGeometry(Geometry $geometry)

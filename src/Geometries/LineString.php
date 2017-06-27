@@ -36,20 +36,20 @@ class LineString extends Line
 
     public function jsonSerialize()
     {
-        $json_data = null;
+        $jsonData = null;
 
         if (count($this->coordinates)) {
-            $json_data = [
+            $jsonData = [
                 'type'        => 'LineString',
                 'coordinates' => []
             ];
 
             foreach ($this->coordinates as $coordinate) {
-                $json_data['coordinates'][] = $coordinate;
+                $jsonData['coordinates'][] = $coordinate;
             }
         }
 
-        return $json_data;
+        return $jsonData;
     }
 
     public function __toString(): string

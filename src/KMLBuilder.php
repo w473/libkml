@@ -486,7 +486,7 @@ class KMLBuilder
                     $point->setAltitudeMode($this->buildAltitudeMode($value));
                     break;
                 case 'coordinates':
-                    $point->setCoordinate($this->buildCoordinates($value));
+                    $point->setCoordinate($this->buildCoordinates((string)$value));
                     break;
             }
         }
@@ -592,27 +592,22 @@ class KMLBuilder
         return $refreshMode;
     }
 
-    private function buildCoordinates(\SimpleXMLElement $coordinatesXMLObject): Coordinates
+    private function buildCoordinates(string $coordinatesString): Coordinates
     {
         $coordinates = new Coordinates();
 
-        $coordinatesString = $coordinatesXMLObject;
-        if (is_object($coordinatesXMLObject)) {
-            $coordinatesString = $coordinatesXMLObject->__toString();
+        $coordinatesArray = explode(",", $coordinatesString);
+
+        if (isset($coordinatesArray[0])) {
+            $coordinates->setLongitude($coordinatesArray[0]);
         }
 
-        $coordinates_array = explode(",", $coordinatesString);
-
-        if (isset($coordinates_array[0])) {
-            $coordinates->setLongitude($coordinates_array[0]);
+        if (isset($coordinatesArray[1])) {
+            $coordinates->setLatitude($coordinatesArray[1]);
         }
 
-        if (isset($coordinates_array[1])) {
-            $coordinates->setLatitude($coordinates_array[1]);
-        }
-
-        if (isset($coordinates_array[2])) {
-            $coordinates->setAltitude($coordinates_array[2]);
+        if (isset($coordinatesArray[2])) {
+            $coordinates->setAltitude($coordinatesArray[2]);
         }
 
         return $coordinates;

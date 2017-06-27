@@ -94,7 +94,7 @@ class Model extends Geometry
         return '';
     }
 
-    function jsonSerialize()
+    public function jsonSerialize()
     {
     }
 }
