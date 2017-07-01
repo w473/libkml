@@ -1,11 +1,12 @@
 <?php
 namespace KML;
 
-use KML\Features\Containers\Container;
-use KML\Features\Feature;
+use KML\Entity\Feature\Container\Container;
+use KML\Entity\Feature\Feature;
+use KML\Hydrator\KMLBuilder;
 
 /**
- * KML default schema version
+ * Entity default schema version
  */
 define('KML_DEFAULT_SCHEMA_VERSION', '2.2');
 
@@ -26,14 +27,6 @@ class KML implements \JsonSerializable
     public function __construct(Feature $feature = null)
     {
         $this->feature = $feature;
-    }
-
-    public static function createFromText(string $text): KML
-    {
-        $enc = mb_detect_encoding($text);
-        $xml = mb_convert_encoding($text, 'UTF-8', $enc);
-
-        return KMLBuilder::buildKML(new \SimpleXMLElement($xml));
     }
 
     public function __toString(): string
@@ -105,9 +98,6 @@ class KML implements \JsonSerializable
         return $jsonData;
     }
 
-    /**
-     * Returns all Styles in the KML
-     */
     public function getAllStyles(): array
     {
         $all_styles = [];
