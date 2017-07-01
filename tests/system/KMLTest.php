@@ -2,6 +2,7 @@
 
 namespace tests\system\KML;
 
+use KML\Hydrator\KMLBuilder;
 use KML\KML;
 use PHPUnit\Framework\TestCase;
 
@@ -14,7 +15,7 @@ class KMLTest extends TestCase
     {
         $kmlData = file_get_contents(self::PARSE_TEST_KML);
 
-        $kml = KML::createFromText($kmlData);
+        $kml = KMLBuilder::createFromText($kmlData);
 
         $this->assertInstanceOf(KML::class, $kml);
         $this->assertEquals(
@@ -29,7 +30,7 @@ class KMLTest extends TestCase
     {
         // Checking if the document was correctly parsed.
         $kmlData = file_get_contents(self::SAMPLE_TIME_KML);
-        $kml = KML::createFromText($kmlData);
+        $kml = KMLBuilder::createFromText($kmlData);
         $features = $kml->getAllFeatures();
         $this->assertNotEmpty($kml);
         $folder = $kml->getFeature();
