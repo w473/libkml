@@ -1,9 +1,10 @@
 <?php
+
 namespace KML;
 
 use KML\Entity\Feature\Container\Container;
+use KML\Entity\Feature\Container\Folder;
 use KML\Entity\Feature\Feature;
-use KML\Hydrator\KMLBuilder;
 
 /**
  * Entity default schema version
@@ -19,9 +20,9 @@ class KML implements \JsonSerializable
 {
     /** @var Feature */
     private $feature;
-    /** @var string  */
+    /** @var string */
     private $version = KML_DEFAULT_SCHEMA_VERSION;
-    /** @var string  */
+    /** @var string */
     private $encoding = KML_DEFAULT_ENCODING;
 
     public function __construct(Feature $feature = null)
@@ -77,21 +78,49 @@ class KML implements \JsonSerializable
         return '';
     }
 
+    public function getGeoJson()
+    {
+        $jsonData = [];
+
+        if (isset($this->feature)) {
+            $allFeatures = $this->getAllFeatures();
+
+            $jsonData['type'] = 'FeatureCollection';
+            $jsonData['features'] = [];
+
+            foreach ($allFeatures as $feature) {
+                $json_feature = $feature->jsonSerialize();
+                if ($json_feature) {
+                    $jsonData['features'][] = $json_feature;
+                }
+            }
+        }
+
+        return $jsonData;
+    }
+
     public function jsonSerialize()
     {
         $jsonData = [];
 
         if (isset($this->feature)) {
-            $all_features = $this->getAllFeatures();
+            $jsonData['name'] = $this->feature->getName();
+            $jsonData['description'] = $this->feature->getDescription();
 
-            $jsonData['type'] = 'FeatureCollection';
-            $jsonData['features'] = [];
-
-            foreach ($all_features as $feature) {
-                $json_feature = $feature->jsonSerialize();
-                if ($json_feature) {
-                    $jsonData['features'][] = $json_feature;
+            $lostFeatures = [];
+            $allFeatures = $this->feature->getFeatures();
+            foreach ($allFeatures as $feature) {
+                if ($feature instanceof Folder) {
+                    $jsonData['folders'][] = $feature;
+                } else {
+                    $lostFeatures[] = $feature;
                 }
+            }
+            if ($lostFeatures) {
+                $jsonData['folders'][] = [
+                    'type'     => 'FeatureCollection',
+                    'features' => $lostFeatures
+                ];
             }
         }
 

@@ -32,12 +32,18 @@ abstract class Feature extends KMLObject implements \JsonSerializable
     /** @var  Region */
     protected $region;
     protected $extendedData;
+    protected $features = [];
 
     abstract public function toWKT(): string;
 
     abstract public function toWKT2d(): string;
 
     abstract public function getAllFeatures();
+
+    public function getFeatures(): array
+    {
+        return $this->features;
+    }
 
     public function jsonSerialize()
     {
