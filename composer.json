@@ -1,6 +1,6 @@
 {
     "name": "cyberprojekt/libkml",
-    "license": "Apache 2.0",
+    "license": "Apache-2.0",
     "type": "library",
     "description": "KML Library - libKML maps KML/KMZ data into proper objects that follows the KML specification. The purpose of the library is create KML file from code, parse KML files and convert to another formats maintaining the complete KML information.",
     "authors": [
